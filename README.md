@@ -1,4 +1,4 @@
-# R-W-Performance
+# R/W Performance
 
 run1.c
 
