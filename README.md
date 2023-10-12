@@ -1,46 +1,45 @@
-# R/W Performance
+# File I/O Performance Tool
 
-run1.c
+## Overview
 
-This program can read and write a file from disk using the standard C/C++ library's `open`, `read`, `write`, and `close` functions.
+This program is a simple utility to measure the read and write performance of a file. It uses block-based operations to read or write data, allowing users to specify the size and count of blocks.
+Features
 
-Way to execute: 
-`./run <filename> [-r|-w] <block_size> <block_count>` 
+    Measure read performance using specified block size and block count.
+    Measure write performance by writing random data to a file using specified block size and block count.
+    Display the performance in MB/s along with other metrics.
 
-Expected output: 
+## Compilation
 
-For write (-w flag) a new file will be created with name as <filename>. 
-The content written to the file will be a randomly generated digit and the size of the file will be block_size * block_count bytes.  
+To compile the program, use the following command: `gcc -o io_perf_tool main.c -lpthread`
 
-Prints: 
-Seconds Elapsed
-MBs Written
-The performance of write in MBs/sec.
+## Usage
 
-For read (-r flag) the code will read a file from the start and the number of bytes read should be equal to block_size * block_count. 
-Will XOR the content read and print it to the terminal. Along with the XOR value will print the performance in MiB/s or bytes/sec.
+`./io_perf_tool <file_name> -<r|w> <block_size> <block_count>`
 
-Prints:
-XOR Hexidecimal for the corresponding file
-Seconds Elapsed
-MB's Read
-Amount of System Calls
-The performance of read in MBs/sec.
+    file_name: The path to the file you want to read or write.
+    -r: To read from the specified file.
+    -w: To write to the specified file.
+    block_size: The size of a single block in bytes.
+    block_count: The number of blocks to read/write.
 
+## Examples
 
-run2.c
+`./io_perf_tool data.bin -r 1024 100`
 
-This program can read from disk using the standard C/C++ library's `open`, `read`, `write`, and `close` functions but does it does it much quicker with chunking.
+    Read from a file data.bin using blocks of size 1024 bytes and 100 blocks:
 
-Way to execute: 
-./run2 <filename> <block_size>  
+`./io_perf_tool data.bin -w 4096 50`
 
-For read (-r flag) the code will read a file from the start and the number of bytes read should be equal to the filesize, with buffersize equal to block_size. 
-Will XOR the content read and print it to the terminal. Along with the XOR value will print the performance in MiB/s or bytes/sec.
+    Write to a file data.bin using blocks of size 4096 bytes and 50 blocks:
 
-Prints:
-XOR Hexidecimal for the corresponding file
-Seconds Elapsed
-MB's Read
-Amount of System Calls
-The performance of read in MBs/sec.
+## Error Handling
+
+In case of incorrect usage or any error during read/write operations, the program will display an error message and exit.
+Note:
+- The write operation generates random numbers and writes them to the file. Every 100 bytes, it inserts a newline.
+- During the read operation, the program performs an XOR operation on the read data and prints the result.
+
+## Contributing
+
+- Please feel free to submit pull requests or raise issues to improve this tool.
